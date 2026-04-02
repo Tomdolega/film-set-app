@@ -1,0 +1,42 @@
+import type { NextFunction, Request, Response } from "express";
+
+import type { CrewRepository } from "@film-set-app/domain-crew";
+import type { EquipmentLookupRepository } from "@film-set-app/domain-equipment";
+import {
+  getShootingDayConflicts,
+  type SchedulingRepository,
+} from "@film-set-app/domain-scheduling";
+import type { ProjectsRepository } from "@film-set-app/domain-projects";
+
+import type { AuthenticatedRequest } from "../../middleware/auth.middleware.js";
+import { presentScheduleConflict } from "../../presenters/scheduling.presenter.js";
+
+interface GetShootingDayConflictsControllerParams {
+  crewRepository: CrewRepository;
+  equipmentRepository: EquipmentLookupRepository;
+  projectsRepository: ProjectsRepository;
+  schedulingRepository: SchedulingRepository;
+}
+
+export function createGetShootingDayConflictsController(
+  params: GetShootingDayConflictsControllerParams,
+) {
+  return async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const shootingDayId =
+        typeof request.params.shootingDayId === "string" ? request.params.shootingDayId : "";
+      const conflicts = await getShootingDayConflicts({
+        shootingDayId,
+        sessionUser: (request as AuthenticatedRequest).sessionUser,
+        crewRepository: params.crewRepository,
+        equipmentRepository: params.equipmentRepository,
+        projectsRepository: params.projectsRepository,
+        schedulingRepository: params.schedulingRepository,
+      });
+
+      response.status(200).json(conflicts.map(presentScheduleConflict));
+    } catch (error) {
+      next(error);
+    }
+  };
+}

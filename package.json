@@ -1,0 +1,42 @@
+{
+  "name": "film-set-app",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "domains/*",
+    "infra/*"
+  ],
+  "scripts": {
+    "dev:api": "node ./node_modules/tsx/dist/cli.mjs apps/api/src/server/index.ts",
+    "start:api": "node ./node_modules/tsx/dist/cli.mjs apps/api/src/server/index.ts",
+    "dev:web": "node ./node_modules/next/dist/bin/next dev apps/web -p 3000",
+    "build:web": "node ./node_modules/next/dist/bin/next build apps/web",
+    "start:web": "node ./node_modules/next/dist/bin/next start apps/web -p 3000",
+    "typecheck": "node ./node_modules/typescript/bin/tsc --project tsconfig.json --noEmit",
+    "db:generate": "node ./node_modules/drizzle-kit/bin.cjs generate --config=infra/database/drizzle.config.ts",
+    "db:migrate": "node ./node_modules/tsx/dist/cli.mjs infra/database/src/migrate.ts",
+    "db:seed:dev": "node ./node_modules/tsx/dist/cli.mjs infra/database/src/seeds/seed-dev.ts"
+  },
+  "dependencies": {
+    "@types/multer": "^2.1.0",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.44.2",
+    "express": "^5.1.0",
+    "multer": "^2.1.1",
+    "next": "^15.0.0",
+    "pg": "^8.16.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.6.0",
+    "@types/pg": "^8.15.6",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "drizzle-kit": "^0.31.4",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

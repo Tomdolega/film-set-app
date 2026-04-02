@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "declaration": false,
+    "baseUrl": ".",
+    "paths": {
+      "@film-set-app/domain-auth": [
+        "domains/auth/src/index.ts"
+      ],
+      "@film-set-app/domain-contacts": [
+        "domains/contacts/src/index.ts"
+      ],
+      "@film-set-app/domain-crew": [
+        "domains/crew/src/index.ts"
+      ],
+      "@film-set-app/domain-documents": [
+        "domains/documents/src/index.ts"
+      ],
+      "@film-set-app/domain-equipment": [
+        "domains/equipment/src/index.ts"
+      ],
+      "@film-set-app/domain-organizations": [
+        "domains/organizations/src/index.ts"
+      ],
+      "@film-set-app/domain-projects": [
+        "domains/projects/src/index.ts"
+      ],
+      "@film-set-app/domain-scheduling": [
+        "domains/scheduling/src/index.ts"
+      ],
+      "@film-set-app/infra-storage": [
+        "infra/storage/src/index.ts"
+      ],
+      "@film-set-app/infra-database": [
+        "infra/database/src/index.ts"
+      ]
+    }
+  }
+}
