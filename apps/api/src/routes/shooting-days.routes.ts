@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import type { CrewRepository } from "@film-set-app/domain-crew";
 import type { EquipmentLookupRepository } from "@film-set-app/domain-equipment";
+import type { NotificationsRepository } from "@film-set-app/domain-notifications";
 import type { SchedulingRepository } from "@film-set-app/domain-scheduling";
 import type { ProjectsRepository } from "@film-set-app/domain-projects";
 
@@ -17,6 +18,7 @@ import { createUpdateShootingDayController } from "../controllers/scheduling/upd
 interface CreateShootingDaysRouterParams {
   crewRepository: CrewRepository;
   equipmentRepository: EquipmentLookupRepository;
+  notificationsRepository: NotificationsRepository;
   projectsRepository: ProjectsRepository;
   schedulingRepository: SchedulingRepository;
 }

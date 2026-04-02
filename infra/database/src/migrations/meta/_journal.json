@@ -36,6 +36,13 @@
       "when": 1775158679930,
       "tag": "0004_equipment",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1775161577023,
+      "tag": "0005_fair_raza",
+      "breakpoints": true
     }
   ]
 }

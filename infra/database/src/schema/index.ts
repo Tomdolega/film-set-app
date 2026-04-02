@@ -7,3 +7,4 @@ export * from "./projects.js";
 export * from "./project-members.js";
 export * from "./documents.js";
 export * from "./shooting-days.js";
+export * from "./notifications.js";

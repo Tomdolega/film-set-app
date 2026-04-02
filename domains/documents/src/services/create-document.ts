@@ -1,6 +1,11 @@
 import { assertProjectAccess, getSessionUser } from "@film-set-app/domain-auth";
 
 import type { SessionUser } from "@film-set-app/domain-auth";
+import type { CrewRepository } from "@film-set-app/domain-crew";
+import {
+  createProjectMemberNotifications,
+  type NotificationsRepository,
+} from "@film-set-app/domain-notifications";
 import type { ProjectsRepository } from "@film-set-app/domain-projects";
 
 import type { DocumentsStorage } from "../documents.storage.js";
@@ -18,6 +23,8 @@ export interface CreateDocumentParams {
   input: unknown;
   file: UploadedDocumentFile | null | undefined;
   sessionUser: SessionUser | null | undefined;
+  crewRepository: CrewRepository;
+  notificationsRepository: NotificationsRepository;
   projectsRepository: ProjectsRepository;
   documentsRepository: DocumentsRepository;
   documentsStorage: DocumentsStorage;
@@ -70,6 +77,20 @@ export async function createDocument(params: CreateDocumentParams): Promise<Docu
       uploadedByUserId: sessionUser.id,
     });
 
+    await createProjectMemberNotifications({
+      projectId: project.id,
+      organizationId: project.organizationId,
+      type: "document_uploaded",
+      severity: "info",
+      title: "New document uploaded",
+      message: `${document.name} was uploaded to ${project.name}.`,
+      linkPath: getDocumentLinkPath(project.organizationId, project.id, document.id),
+      relatedEntityType: "document",
+      relatedEntityId: document.id,
+      crewRepository: params.crewRepository,
+      notificationsRepository: params.notificationsRepository,
+    });
+
     return {
       document,
       currentUserRole: membership.role,
@@ -78,4 +99,12 @@ export async function createDocument(params: CreateDocumentParams): Promise<Docu
     await params.documentsStorage.deleteFile(storedFile.storageKey);
     throw error;
   }
+}
+
+function getDocumentLinkPath(
+  organizationId: string,
+  projectId: string,
+  documentId: string,
+) {
+  return `/organizations/${organizationId}/projects/${projectId}/documents/${documentId}`;
 }

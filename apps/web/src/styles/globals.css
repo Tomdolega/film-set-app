@@ -71,9 +71,25 @@ select {
 }
 
 .sidebar__link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0.75rem 0.9rem;
   border-radius: 0.75rem;
   background: rgba(255, 255, 255, 0.08);
+}
+
+.sidebar__badge {
+  display: inline-flex;
+  min-width: 1.75rem;
+  justify-content: center;
+  align-items: center;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: #f97316;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
 }
 
 .sidebar__session {
@@ -233,6 +249,21 @@ select {
   text-transform: capitalize;
 }
 
+.pill--info {
+  background: #eef2f8;
+  color: #43556c;
+}
+
+.pill--warning {
+  background: #fff5db;
+  color: #9a5a00;
+}
+
+.pill--conflict {
+  background: #ffe3e3;
+  color: #9a1f1f;
+}
+
 .notice--error,
 .field-error {
   color: #9a1f1f;
@@ -270,6 +301,48 @@ select {
   margin-top: 1rem;
 }
 
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.notification-card {
+  align-items: flex-start;
+}
+
+.notification-card--unread {
+  border-color: #bfd0f7;
+  background: #f7faff;
+}
+
+.notification-card__content {
+  flex: 1;
+}
+
+.notification-card__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.notification-card__meta-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.notification-card__timestamp {
+  color: #5f728a;
+  font-size: 0.9rem;
+}
+
+.notification-card__actions {
+  flex-shrink: 0;
+}
+
 @media (max-width: 920px) {
   .app-shell {
     grid-template-columns: 1fr;
@@ -290,5 +363,13 @@ select {
   .field-grid,
   .meta-grid {
     grid-template-columns: 1fr;
+  }
+
+  .notification-card {
+    flex-direction: column;
+  }
+
+  .notification-card__actions {
+    width: 100%;
   }
 }

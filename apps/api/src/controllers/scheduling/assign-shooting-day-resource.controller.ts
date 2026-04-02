@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 
 import type { CrewRepository } from "@film-set-app/domain-crew";
 import type { EquipmentLookupRepository } from "@film-set-app/domain-equipment";
+import type { NotificationsRepository } from "@film-set-app/domain-notifications";
 import {
   assignShootingDayResource,
   type SchedulingRepository,
@@ -14,6 +15,7 @@ import { presentShootingDayAssignment } from "../../presenters/scheduling.presen
 interface AssignShootingDayResourceControllerParams {
   crewRepository: CrewRepository;
   equipmentRepository: EquipmentLookupRepository;
+  notificationsRepository: NotificationsRepository;
   projectsRepository: ProjectsRepository;
   schedulingRepository: SchedulingRepository;
 }
@@ -31,6 +33,7 @@ export function createAssignShootingDayResourceController(
         sessionUser: (request as AuthenticatedRequest).sessionUser,
         crewRepository: params.crewRepository,
         equipmentRepository: params.equipmentRepository,
+        notificationsRepository: params.notificationsRepository,
         projectsRepository: params.projectsRepository,
         schedulingRepository: params.schedulingRepository,
       });

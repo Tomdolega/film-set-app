@@ -4,6 +4,7 @@ import type { ContactsRepository } from "@film-set-app/domain-contacts";
 import type { CrewRepository } from "@film-set-app/domain-crew";
 import type { DocumentsRepository, DocumentsStorage } from "@film-set-app/domain-documents";
 import type { EquipmentRepository } from "@film-set-app/domain-equipment";
+import type { NotificationsRepository } from "@film-set-app/domain-notifications";
 import type { OrganizationsRepository } from "@film-set-app/domain-organizations";
 import type { ProjectsRepository } from "@film-set-app/domain-projects";
 import type { SchedulingRepository } from "@film-set-app/domain-scheduling";
@@ -15,6 +16,7 @@ import { createContactsRouter } from "../routes/contacts.routes.js";
 import { createDocumentsRouter } from "../routes/documents.routes.js";
 import { createEquipmentRouter } from "../routes/equipment.routes.js";
 import { createHealthRouter } from "../routes/health.routes.js";
+import { createNotificationsRouter } from "../routes/notifications.routes.js";
 import { createOrganizationsRouter } from "../routes/organizations.routes.js";
 import { createProjectsRouter } from "../routes/projects.routes.js";
 import { createShootingDaysRouter } from "../routes/shooting-days.routes.js";
@@ -29,6 +31,7 @@ export interface CreateAppParams {
   documentsRepository: DocumentsRepository;
   documentsStorage: DocumentsStorage;
   equipmentRepository: EquipmentRepository;
+  notificationsRepository: NotificationsRepository;
   schedulingRepository: SchedulingRepository;
 }
 
@@ -46,6 +49,7 @@ export function createApp(params: CreateAppParams) {
   app.use("/projects", createProjectsRouter(params));
   app.use("/documents", createDocumentsRouter(params));
   app.use("/shooting-days", createShootingDaysRouter(params));
+  app.use("/notifications", createNotificationsRouter(params));
   app.use(createErrorHandler());
 
   return app;

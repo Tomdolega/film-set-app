@@ -4,6 +4,7 @@ import multer from "multer";
 import type { CrewRepository, UserLookupRepository } from "@film-set-app/domain-crew";
 import type { ContactsRepository } from "@film-set-app/domain-contacts";
 import type { DocumentsRepository, DocumentsStorage } from "@film-set-app/domain-documents";
+import type { NotificationsRepository } from "@film-set-app/domain-notifications";
 import type { OrganizationsRepository } from "@film-set-app/domain-organizations";
 import type { ProjectsRepository } from "@film-set-app/domain-projects";
 import type { SchedulingRepository } from "@film-set-app/domain-scheduling";
@@ -29,6 +30,7 @@ interface CreateProjectsRouterParams {
   crewRepository: CrewRepository;
   documentsRepository: DocumentsRepository;
   documentsStorage: DocumentsStorage;
+  notificationsRepository: NotificationsRepository;
   schedulingRepository: SchedulingRepository;
 }
 

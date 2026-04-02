@@ -1,7 +1,8 @@
 import { assertProjectAccess, getSessionUser } from "@film-set-app/domain-auth";
 import type { SessionUser } from "@film-set-app/domain-auth";
-import type { CrewRepository } from "@film-set-app/domain-crew";
+import type { CrewMember, CrewRepository } from "@film-set-app/domain-crew";
 import type { EquipmentLookupRepository } from "@film-set-app/domain-equipment";
+import type { NotificationsRepository } from "@film-set-app/domain-notifications";
 import type { ProjectsRepository } from "@film-set-app/domain-projects";
 
 import type { ShootingDayAssignment } from "../model/shooting-day.js";
@@ -19,6 +20,7 @@ export interface AssignShootingDayResourceParams {
   sessionUser: SessionUser | null | undefined;
   crewRepository: CrewRepository;
   equipmentRepository: EquipmentLookupRepository;
+  notificationsRepository: NotificationsRepository;
   projectsRepository: ProjectsRepository;
   schedulingRepository: SchedulingRepository;
 }
@@ -48,6 +50,7 @@ export async function assignShootingDayResource(
   }
 
   const input = parseCreateShootingDayAssignmentInput(params.input);
+  let assignedCrewMember: CrewMember | null = null;
   const existing = await params.schedulingRepository.findAssignmentByReference({
     shootingDayId: params.shootingDayId,
     type: input.type,
@@ -68,6 +71,8 @@ export async function assignShootingDayResource(
       error.statusCode = 400;
       throw error;
     }
+
+    assignedCrewMember = crewMember;
   }
 
   if (input.type === "equipment") {
@@ -92,7 +97,7 @@ export async function assignShootingDayResource(
     }
   }
 
-  return params.schedulingRepository.createShootingDayAssignment({
+  const assignment = await params.schedulingRepository.createShootingDayAssignment({
     shootingDayId: shootingDay.id,
     projectId: shootingDay.projectId,
     organizationId: shootingDay.organizationId,
@@ -101,4 +106,33 @@ export async function assignShootingDayResource(
     label: input.label,
     callTime: input.callTime,
   });
+
+  if (assignedCrewMember?.userId) {
+    await params.notificationsRepository.createNotification({
+      userId: assignedCrewMember.userId,
+      organizationId: shootingDay.organizationId,
+      projectId: shootingDay.projectId,
+      type: "crew_assignment",
+      severity: "info",
+      title: "Assigned to shooting day",
+      message: `You were assigned to the shooting day on ${shootingDay.date} at ${shootingDay.location}.`,
+      linkPath: getShootingDayLinkPath(
+        shootingDay.organizationId,
+        shootingDay.projectId,
+        shootingDay.id,
+      ),
+      relatedEntityType: "shooting_day_assignment",
+      relatedEntityId: assignment.id,
+    });
+  }
+
+  return assignment;
+}
+
+function getShootingDayLinkPath(
+  organizationId: string,
+  projectId: string,
+  shootingDayId: string,
+) {
+  return `/organizations/${organizationId}/projects/${projectId}/shooting-days/${shootingDayId}`;
 }

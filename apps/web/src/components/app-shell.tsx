@@ -1,14 +1,16 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { getUnreadNotificationsCount } from "@/features/notifications/api/get-unread-notifications-count";
 import { getMockSession } from "@/lib/session";
 
 interface AppShellProps {
   children: ReactNode;
 }
 
-export function AppShell(props: AppShellProps) {
+export async function AppShell(props: AppShellProps) {
   const session = getMockSession();
+  const unreadCount = await getUnreadCount();
 
   return (
     <div className="app-shell">
@@ -23,6 +25,10 @@ export function AppShell(props: AppShellProps) {
         <nav className="sidebar__nav">
           <Link href="/organizations" className="sidebar__link">
             Organizations
+          </Link>
+          <Link href="/notifications" className="sidebar__link">
+            <span>Notifications</span>
+            {unreadCount > 0 ? <span className="sidebar__badge">{unreadCount}</span> : null}
           </Link>
         </nav>
 
@@ -47,3 +53,10 @@ export function AppShell(props: AppShellProps) {
   );
 }
 
+async function getUnreadCount(): Promise<number> {
+  try {
+    return await getUnreadNotificationsCount();
+  } catch {
+    return 0;
+  }
+}

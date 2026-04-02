@@ -6,6 +6,7 @@ import {
   DrizzleCrewRepository,
   DrizzleDocumentsRepository,
   DrizzleEquipmentRepository,
+  DrizzleNotificationsRepository,
   DrizzleOrganizationsRepository,
   DrizzleProjectsRepository,
   DrizzleSchedulingRepository,
@@ -26,6 +27,7 @@ async function main() {
   const crewRepository = new DrizzleCrewRepository(databaseClient.db);
   const documentsRepository = new DrizzleDocumentsRepository(databaseClient.db);
   const equipmentRepository = new DrizzleEquipmentRepository(databaseClient.db);
+  const notificationsRepository = new DrizzleNotificationsRepository(databaseClient.db);
   const schedulingRepository = new DrizzleSchedulingRepository(databaseClient.db);
   const documentsStorage = createLocalDocumentsStorage();
   const app = createApp({
@@ -38,6 +40,7 @@ async function main() {
     documentsRepository,
     documentsStorage,
     equipmentRepository,
+    notificationsRepository,
     schedulingRepository,
   });
 

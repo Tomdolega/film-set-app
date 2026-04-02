@@ -159,3 +159,42 @@ export interface CallSheetDto {
   notes: string | null;
   crew: CallSheetCrewEntryDto[];
 }
+
+export interface NotificationDto {
+  id: string;
+  userId: string;
+  organizationId: string;
+  projectId: string | null;
+  type:
+    | "project_update"
+    | "crew_assignment"
+    | "shooting_day_update"
+    | "schedule_conflict"
+    | "document_uploaded"
+    | "equipment_update"
+    | "generic";
+  severity: "info" | "warning" | "conflict";
+  title: string;
+  message: string;
+  isRead: boolean;
+  linkPath: string | null;
+  relatedEntityType:
+    | "project"
+    | "project_member"
+    | "shooting_day"
+    | "shooting_day_assignment"
+    | "document"
+    | "equipment_item"
+    | "generic"
+    | null;
+  relatedEntityId: string | null;
+  createdAt: string;
+}
+
+export interface NotificationsUnreadCountDto {
+  count: number;
+}
+
+export interface MarkAllNotificationsAsReadDto {
+  updatedCount: number;
+}

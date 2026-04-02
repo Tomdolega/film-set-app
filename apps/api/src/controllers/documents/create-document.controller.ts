@@ -1,16 +1,20 @@
 import type { NextFunction, Request, Response } from "express";
 
+import type { CrewRepository } from "@film-set-app/domain-crew";
 import {
   createDocument,
   type DocumentsRepository,
   type DocumentsStorage,
 } from "@film-set-app/domain-documents";
+import type { NotificationsRepository } from "@film-set-app/domain-notifications";
 import type { ProjectsRepository } from "@film-set-app/domain-projects";
 
 import type { AuthenticatedRequest } from "../../middleware/auth.middleware.js";
 import { presentDocument } from "../../presenters/document.presenter.js";
 
 interface CreateDocumentControllerParams {
+  crewRepository: CrewRepository;
+  notificationsRepository: NotificationsRepository;
   projectsRepository: ProjectsRepository;
   documentsRepository: DocumentsRepository;
   documentsStorage: DocumentsStorage;
@@ -37,6 +41,8 @@ export function createCreateDocumentController(params: CreateDocumentControllerP
             }
           : null,
         sessionUser: (request as AuthenticatedRequest).sessionUser,
+        crewRepository: params.crewRepository,
+        notificationsRepository: params.notificationsRepository,
         projectsRepository: params.projectsRepository,
         documentsRepository: params.documentsRepository,
         documentsStorage: params.documentsStorage,
