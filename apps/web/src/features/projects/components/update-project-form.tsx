@@ -26,7 +26,7 @@ export function UpdateProjectForm(props: UpdateProjectFormProps) {
 
       <label className="field">
         <span className="field__label">Project name</span>
-        <input className="input" type="text" name="name" defaultValue={props.project.name} />
+        <input className="input" type="text" name="name" defaultValue={props.project.name} required />
       </label>
 
       <label className="field">

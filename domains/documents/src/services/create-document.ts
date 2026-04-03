@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 import { assertProjectAccess, getSessionUser } from "@film-set-app/domain-auth";
 
 import type { SessionUser } from "@film-set-app/domain-auth";
@@ -59,18 +61,24 @@ export async function createDocument(params: CreateDocumentParams): Promise<Docu
   }
 
   const input = parseCreateDocumentInput(params.input);
+  const documentId = randomUUID();
+  const originalFilename = getOriginalFilename(params.file.originalName);
   const storedFile = await params.documentsStorage.saveFile({
+    organizationId: project.organizationId,
     projectId: params.projectId,
+    documentId,
     file: params.file,
   });
 
   try {
     const document = await params.documentsRepository.createDocument({
+      id: documentId,
       organizationId: project.organizationId,
       projectId: project.id,
-      name: input.name ?? params.file.originalName,
+      name: input.name ?? originalFilename,
       type: input.type,
       description: input.description,
+      originalFilename,
       storageKey: storedFile.storageKey,
       mimeType: params.file.mimeType,
       fileSize: params.file.size,
@@ -87,6 +95,7 @@ export async function createDocument(params: CreateDocumentParams): Promise<Docu
       linkPath: getDocumentLinkPath(project.organizationId, project.id, document.id),
       relatedEntityType: "document",
       relatedEntityId: document.id,
+      excludeUserIds: [sessionUser.id],
       crewRepository: params.crewRepository,
       notificationsRepository: params.notificationsRepository,
     });
@@ -107,4 +116,9 @@ function getDocumentLinkPath(
   documentId: string,
 ) {
   return `/organizations/${organizationId}/projects/${projectId}/documents/${documentId}`;
+}
+
+function getOriginalFilename(fileName: string): string {
+  const normalized = fileName.split(/[/\\]/).pop()?.trim() ?? "";
+  return normalized || "document";
 }

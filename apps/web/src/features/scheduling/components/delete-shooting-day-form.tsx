@@ -1,3 +1,10 @@
+"use client";
+
+import { useActionState } from "react";
+
+import { SubmitButton } from "@/components/submit-button";
+import { initialFormState } from "@/lib/form-state";
+
 import { deleteShootingDayAction } from "../actions";
 
 interface DeleteShootingDayFormProps {
@@ -13,12 +20,12 @@ export function DeleteShootingDayForm(props: DeleteShootingDayFormProps) {
     props.projectId,
     props.shootingDayId,
   );
+  const [state, formAction] = useActionState(action, initialFormState);
 
   return (
-    <form action={action}>
-      <button type="submit" className="button button--secondary">
-        Delete shooting day
-      </button>
+    <form action={formAction} className="stack stack--tight">
+      {state.error ? <p className="field-error">{state.error}</p> : null}
+      <SubmitButton label="Delete shooting day" pendingLabel="Deleting..." variant="secondary" />
     </form>
   );
 }

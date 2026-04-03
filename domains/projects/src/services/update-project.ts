@@ -4,7 +4,7 @@ import type { SessionUser } from "@film-set-app/domain-auth";
 
 import { canManageProject } from "../permissions/projects.permissions.js";
 import type { ProjectWithMembership } from "../model/project.js";
-import { parseUpdateProjectInput } from "../schemas/project-schemas.js";
+import { assertProjectDateRange, parseUpdateProjectInput } from "../schemas/project-schemas.js";
 import type { ProjectsRepository } from "../repositories/projects.repository.js";
 
 interface StatusError extends Error {
@@ -32,7 +32,19 @@ export async function updateProject(params: UpdateProjectParams): Promise<Projec
     throw error;
   }
 
+  const existingProject = await params.projectsRepository.findProjectById(params.projectId);
+
+  if (!existingProject) {
+    const error: StatusError = new Error("Project not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
   const input = parseUpdateProjectInput(params.input);
+  const startDate = input.startDate === undefined ? existingProject.startDate : input.startDate;
+  const endDate = input.endDate === undefined ? existingProject.endDate : input.endDate;
+
+  assertProjectDateRange(startDate, endDate);
   const project = await params.projectsRepository.updateProject(params.projectId, input);
 
   if (!project) {

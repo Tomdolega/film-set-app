@@ -21,6 +21,7 @@ import { createListProjectsController } from "../controllers/projects/list-proje
 import { createUpdateProjectController } from "../controllers/projects/update-project.controller.js";
 import { createCreateShootingDayController } from "../controllers/scheduling/create-shooting-day.controller.js";
 import { createListShootingDaysController } from "../controllers/scheduling/list-shooting-days.controller.js";
+import { getDocumentUploadMaxBytes } from "../lib/runtime-config.js";
 
 interface CreateProjectsRouterParams {
   usersRepository: UserLookupRepository;
@@ -39,7 +40,7 @@ export function createProjectsRouter(params: CreateProjectsRouterParams) {
   const documentUpload = multer({
     storage: multer.memoryStorage(),
     limits: {
-      fileSize: 20 * 1024 * 1024,
+      fileSize: getDocumentUploadMaxBytes(),
     },
   });
 

@@ -5,6 +5,7 @@ interface StatusError extends Error {
 }
 
 export interface CreateShootingDayInput {
+  title: string;
   date: string;
   location: string;
   startTime: string;
@@ -14,6 +15,7 @@ export interface CreateShootingDayInput {
 }
 
 export interface UpdateShootingDayInput {
+  title?: string;
   date?: string;
   location?: string;
   startTime?: string;
@@ -32,6 +34,7 @@ export interface CreateShootingDayAssignmentInput {
 export function parseCreateShootingDayInput(input: unknown): CreateShootingDayInput {
   const record = parseRecord(input);
   const parsed = {
+    title: parseRequiredString(record.title, "title is required"),
     date: parseRequiredDate(record.date, "date is required"),
     location: parseRequiredString(record.location, "location is required"),
     startTime: parseRequiredTime(record.startTime, "startTime is required"),
@@ -50,6 +53,10 @@ export function parseUpdateShootingDayInput(input: unknown): UpdateShootingDayIn
 
   if ("date" in record) {
     parsed.date = parseRequiredDate(record.date, "date is required");
+  }
+
+  if ("title" in record) {
+    parsed.title = parseRequiredString(record.title, "title is required");
   }
 
   if ("location" in record) {

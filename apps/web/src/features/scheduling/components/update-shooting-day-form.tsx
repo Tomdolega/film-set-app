@@ -30,10 +30,27 @@ export function UpdateShootingDayForm(props: UpdateShootingDayFormProps) {
         <p>Changing the time window updates conflict results immediately after reload.</p>
       </div>
 
+      <label className="field">
+        <span className="field__label">Title</span>
+        <input
+          className="input"
+          type="text"
+          name="title"
+          defaultValue={props.shootingDay.title}
+          required
+        />
+      </label>
+
       <div className="field-grid">
         <label className="field">
           <span className="field__label">Date</span>
-          <input className="input" type="date" name="date" defaultValue={props.shootingDay.date} />
+          <input
+            className="input"
+            type="date"
+            name="date"
+            defaultValue={props.shootingDay.date}
+            required
+          />
         </label>
 
         <label className="field">
@@ -47,7 +64,13 @@ export function UpdateShootingDayForm(props: UpdateShootingDayFormProps) {
 
       <label className="field">
         <span className="field__label">Location</span>
-        <input className="input" type="text" name="location" defaultValue={props.shootingDay.location} />
+        <input
+          className="input"
+          type="text"
+          name="location"
+          defaultValue={props.shootingDay.location}
+          required
+        />
       </label>
 
       <div className="field-grid">
@@ -58,6 +81,7 @@ export function UpdateShootingDayForm(props: UpdateShootingDayFormProps) {
             type="time"
             name="startTime"
             defaultValue={props.shootingDay.startTime.slice(0, 5)}
+            required
           />
         </label>
 
@@ -68,6 +92,7 @@ export function UpdateShootingDayForm(props: UpdateShootingDayFormProps) {
             type="time"
             name="endTime"
             defaultValue={props.shootingDay.endTime.slice(0, 5)}
+            required
           />
         </label>
       </div>

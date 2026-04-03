@@ -17,6 +17,7 @@ export interface CreateProjectMemberNotificationsParams {
   linkPath?: string | null;
   relatedEntityType?: NotificationRelatedEntityType | null;
   relatedEntityId?: string | null;
+  excludeUserIds?: string[];
   crewRepository: CrewRepository;
   notificationsRepository: NotificationsRepository;
 }
@@ -26,6 +27,7 @@ export async function createProjectMemberNotifications(
 ): Promise<number> {
   const userIds = await listProjectNotificationRecipientUserIds({
     projectId: params.projectId,
+    excludeUserIds: params.excludeUserIds,
     crewRepository: params.crewRepository,
   });
 
@@ -55,6 +57,7 @@ export async function createProjectMemberNotifications(
 
 export interface ListProjectNotificationRecipientUserIdsParams {
   projectId: string;
+  excludeUserIds?: string[];
   crewRepository: CrewRepository;
 }
 
@@ -62,11 +65,12 @@ export async function listProjectNotificationRecipientUserIds(
   params: ListProjectNotificationRecipientUserIdsParams,
 ): Promise<string[]> {
   const crewMembers = await params.crewRepository.listProjectCrew(params.projectId);
+  const excludedUserIds = new Set(params.excludeUserIds ?? []);
 
   return Array.from(
     new Set(
       crewMembers.flatMap((member) => {
-        if (!member.userId) {
+        if (!member.userId || excludedUserIds.has(member.userId)) {
           return [];
         }
 

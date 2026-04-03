@@ -45,7 +45,7 @@ export function AddCrewMemberForm(props: AddCrewMemberFormProps) {
 
       <label className="field">
         <span className="field__label">Contact</span>
-        <select className="input" name="contactId" defaultValue="">
+        <select className="input" name="contactId" defaultValue="" required>
           <option value="" disabled>
             Select a contact
           </option>

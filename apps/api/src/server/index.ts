@@ -1,5 +1,6 @@
 import "dotenv/config";
 
+import { GoogleCalendarProvider } from "@film-set-app/domain-integrations-calendar";
 import {
   createDatabaseClient,
   DrizzleContactsRepository,
@@ -10,17 +11,20 @@ import {
   DrizzleOrganizationsRepository,
   DrizzleProjectsRepository,
   DrizzleSchedulingRepository,
+  DrizzleSessionsRepository,
   DrizzleUsersRepository,
   getDatabaseErrorMessage,
 } from "@film-set-app/infra-database";
-import { createLocalDocumentsStorage } from "@film-set-app/infra-storage";
+import { createS3DocumentsStorage } from "@film-set-app/infra-storage";
 
 import { createApp } from "./app.js";
 
 async function main() {
   const port = Number(process.env.PORT ?? 3001);
+  const calendarProviders = [new GoogleCalendarProvider()];
   const databaseClient = createDatabaseClient();
   const usersRepository = new DrizzleUsersRepository(databaseClient.db);
+  const sessionsRepository = new DrizzleSessionsRepository(databaseClient.db);
   const organizationsRepository = new DrizzleOrganizationsRepository(databaseClient.db);
   const projectsRepository = new DrizzleProjectsRepository(databaseClient.db);
   const contactsRepository = new DrizzleContactsRepository(databaseClient.db);
@@ -29,10 +33,12 @@ async function main() {
   const equipmentRepository = new DrizzleEquipmentRepository(databaseClient.db);
   const notificationsRepository = new DrizzleNotificationsRepository(databaseClient.db);
   const schedulingRepository = new DrizzleSchedulingRepository(databaseClient.db);
-  const documentsStorage = createLocalDocumentsStorage();
+  const documentsStorage = createS3DocumentsStorage();
   const app = createApp({
+    calendarProviders,
     databaseClient,
     usersRepository,
+    sessionsRepository,
     organizationsRepository,
     projectsRepository,
     contactsRepository,

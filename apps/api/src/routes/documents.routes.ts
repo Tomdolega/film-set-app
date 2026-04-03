@@ -4,6 +4,7 @@ import type { DocumentsRepository, DocumentsStorage } from "@film-set-app/domain
 import type { ProjectsRepository } from "@film-set-app/domain-projects";
 
 import { createDeleteDocumentController } from "../controllers/documents/delete-document.controller.js";
+import { createDownloadDocumentController } from "../controllers/documents/download-document.controller.js";
 import { createGetDocumentController } from "../controllers/documents/get-document.controller.js";
 import { createUpdateDocumentController } from "../controllers/documents/update-document.controller.js";
 
@@ -17,6 +18,7 @@ export function createDocumentsRouter(params: CreateDocumentsRouterParams) {
   const router = Router();
 
   router.get("/:documentId", createGetDocumentController(params));
+  router.get("/:documentId/download", createDownloadDocumentController(params));
   router.patch("/:documentId", createUpdateDocumentController(params));
   router.delete("/:documentId", createDeleteDocumentController(params));
 

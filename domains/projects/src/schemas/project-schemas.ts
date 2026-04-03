@@ -24,13 +24,17 @@ export function parseCreateProjectInput(input: unknown): CreateProjectInput {
   const value = requireObject(input, "Project payload is required");
   const organizationId = requireString(value.organizationId, "organizationId is required");
   const name = requireString(value.name, "name is required");
+  const startDate = optionalDateString(value.startDate);
+  const endDate = optionalDateString(value.endDate);
+
+  assertProjectDateRange(startDate ?? null, endDate ?? null);
 
   return {
     organizationId,
     name,
     description: optionalString(value.description),
-    startDate: optionalDateString(value.startDate),
-    endDate: optionalDateString(value.endDate),
+    startDate,
+    endDate,
   };
 }
 
@@ -64,7 +68,22 @@ export function parseUpdateProjectInput(input: unknown): UpdateProjectInput {
     throw error;
   }
 
+  if (result.startDate !== undefined && result.endDate !== undefined) {
+    assertProjectDateRange(result.startDate ?? null, result.endDate ?? null);
+  }
+
   return result;
+}
+
+export function assertProjectDateRange(
+  startDate: string | null | undefined,
+  endDate: string | null | undefined,
+): void {
+  if (startDate && endDate && startDate > endDate) {
+    const error: StatusError = new Error("Project start date must be on or before the end date");
+    error.statusCode = 400;
+    throw error;
+  }
 }
 
 function requireObject(value: unknown, message: string): Record<string, unknown> {

@@ -13,9 +13,12 @@
     "dev:web": "node ./node_modules/next/dist/bin/next dev apps/web -p 3000",
     "build:web": "node ./node_modules/next/dist/bin/next build apps/web",
     "start:web": "node ./node_modules/next/dist/bin/next start apps/web -p 3000",
+    "test": "node --import tsx --test domains/**/*.test.ts",
     "typecheck": "node ./node_modules/typescript/bin/tsc --project tsconfig.json --noEmit",
+    "deploy:check": "npm run typecheck && npm test && npm run build:web",
     "db:generate": "node ./node_modules/drizzle-kit/bin.cjs generate --config=infra/database/drizzle.config.ts",
     "db:migrate": "node ./node_modules/tsx/dist/cli.mjs infra/database/src/migrate.ts",
+    "db:migrate:prod": "npm run db:migrate",
     "db:seed:dev": "node ./node_modules/tsx/dist/cli.mjs infra/database/src/seeds/seed-dev.ts"
   },
   "dependencies": {

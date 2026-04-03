@@ -1,15 +1,16 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { logoutAction } from "@/features/auth/actions";
 import { getUnreadNotificationsCount } from "@/features/notifications/api/get-unread-notifications-count";
-import { getMockSession } from "@/lib/session";
+import type { AuthUserDto } from "@/lib/api-types";
 
 interface AppShellProps {
   children: ReactNode;
+  session: AuthUserDto;
 }
 
 export async function AppShell(props: AppShellProps) {
-  const session = getMockSession();
   const unreadCount = await getUnreadCount();
 
   return (
@@ -33,9 +34,14 @@ export async function AppShell(props: AppShellProps) {
         </nav>
 
         <div className="sidebar__session">
-          <p className="sidebar__session-label">Mock session</p>
-          <strong>{session.name}</strong>
-          <span>{session.email}</span>
+          <p className="sidebar__session-label">Signed in as</p>
+          <strong>{props.session.name ?? props.session.email}</strong>
+          <span>{props.session.email}</span>
+          <form action={logoutAction} className="sidebar__logout">
+            <button className="button button--secondary sidebar__logout-button" type="submit">
+              Log out
+            </button>
+          </form>
         </div>
       </aside>
 

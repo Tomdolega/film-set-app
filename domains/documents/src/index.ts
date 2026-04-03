@@ -14,6 +14,11 @@ export type { DocumentsStorage, StoredDocumentFile } from "./documents.storage.j
 export { createDocument, type CreateDocumentParams } from "./services/create-document.js";
 export { getDocument, type GetDocumentParams } from "./services/get-document.js";
 export {
+  getDocumentDownload,
+  type DocumentDownloadResult,
+  type GetDocumentDownloadParams,
+} from "./services/get-document-download.js";
+export {
   listProjectDocuments,
   type ListProjectDocumentsParams,
 } from "./services/list-project-documents.js";

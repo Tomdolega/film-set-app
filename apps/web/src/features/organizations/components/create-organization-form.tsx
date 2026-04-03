@@ -19,7 +19,7 @@ export function CreateOrganizationForm() {
 
       <label className="field">
         <span className="field__label">Organization name</span>
-        <input className="input" type="text" name="name" placeholder="Small Studio" />
+        <input className="input" type="text" name="name" placeholder="Small Studio" required />
       </label>
 
       {state.error ? <p className="field-error">{state.error}</p> : null}
@@ -28,4 +28,3 @@ export function CreateOrganizationForm() {
     </form>
   );
 }
-

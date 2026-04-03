@@ -54,6 +54,7 @@ export async function createShootingDay(
   const shootingDay = await params.schedulingRepository.createShootingDay({
     projectId: params.projectId,
     organizationId: project.organizationId,
+    title: input.title,
     date: input.date,
     location: input.location,
     startTime: input.startTime,
@@ -68,10 +69,11 @@ export async function createShootingDay(
     type: "shooting_day_update",
     severity: "info",
     title: "Shooting day created",
-    message: `A shooting day for ${shootingDay.date} was created at ${shootingDay.location}.`,
+    message: `"${shootingDay.title}" was created for ${shootingDay.date} at ${shootingDay.location}.`,
     linkPath: getShootingDayLinkPath(project.organizationId, project.id, shootingDay.id),
     relatedEntityType: "shooting_day",
     relatedEntityId: shootingDay.id,
+    excludeUserIds: [sessionUser.id],
     crewRepository: params.crewRepository,
     notificationsRepository: params.notificationsRepository,
   });

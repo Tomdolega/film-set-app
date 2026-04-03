@@ -74,8 +74,15 @@ export async function removeCrewMemberAction(
   organizationId: string,
   projectId: string,
   projectMemberId: string,
-): Promise<void> {
-  await removeProjectMember(projectId, projectMemberId);
+): Promise<FormState> {
+  try {
+    await removeProjectMember(projectId, projectMemberId);
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Unable to remove the crew member.",
+    };
+  }
+
   redirect(getProjectPath(organizationId, projectId));
 }
 

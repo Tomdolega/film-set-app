@@ -24,7 +24,7 @@ export function CreateContactForm(props: CreateContactFormProps) {
 
       <label className="field">
         <span className="field__label">Name</span>
-        <input className="input" type="text" name="name" placeholder="Alex Producer" />
+        <input className="input" type="text" name="name" placeholder="Alex Producer" required />
       </label>
 
       <label className="field">

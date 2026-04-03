@@ -23,10 +23,21 @@ export function CreateShootingDayForm(props: CreateShootingDayFormProps) {
         <p>Define the production window first, then add crew assignments on the detail page.</p>
       </div>
 
+      <label className="field">
+        <span className="field__label">Title</span>
+        <input
+          className="input"
+          type="text"
+          name="title"
+          placeholder="Day 1 | Main Unit"
+          required
+        />
+      </label>
+
       <div className="field-grid">
         <label className="field">
           <span className="field__label">Date</span>
-          <input className="input" type="date" name="date" />
+          <input className="input" type="date" name="date" required />
         </label>
 
         <label className="field">
@@ -40,18 +51,18 @@ export function CreateShootingDayForm(props: CreateShootingDayFormProps) {
 
       <label className="field">
         <span className="field__label">Location</span>
-        <input className="input" type="text" name="location" placeholder="Studio A" />
+        <input className="input" type="text" name="location" placeholder="Studio A" required />
       </label>
 
       <div className="field-grid">
         <label className="field">
           <span className="field__label">Start time</span>
-          <input className="input" type="time" name="startTime" />
+          <input className="input" type="time" name="startTime" required />
         </label>
 
         <label className="field">
           <span className="field__label">End time</span>
-          <input className="input" type="time" name="endTime" />
+          <input className="input" type="time" name="endTime" required />
         </label>
       </div>
 

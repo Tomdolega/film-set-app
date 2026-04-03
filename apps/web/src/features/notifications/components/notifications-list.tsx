@@ -2,8 +2,7 @@ import Link from "next/link";
 
 import { EmptyState } from "@/components/empty-state";
 import type { NotificationDto } from "@/lib/api-types";
-
-import { markNotificationAsReadAction } from "../actions";
+import { MarkNotificationReadForm } from "./mark-notification-read-form";
 
 interface NotificationsListProps {
   notifications: NotificationDto[];
@@ -22,8 +21,6 @@ export function NotificationsList(props: NotificationsListProps) {
   return (
     <div className="notifications-list">
       {props.notifications.map((notification) => {
-        const action = markNotificationAsReadAction.bind(null, notification.id);
-
         return (
           <article
             key={notification.id}
@@ -56,11 +53,7 @@ export function NotificationsList(props: NotificationsListProps) {
             </div>
 
             {!notification.isRead ? (
-              <form action={action} className="notification-card__actions">
-                <button type="submit" className="button button--secondary">
-                  Mark as read
-                </button>
-              </form>
+              <MarkNotificationReadForm notificationId={notification.id} />
             ) : null}
           </article>
         );

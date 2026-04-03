@@ -1,5 +1,3 @@
-export interface SessionUser {
-  id: string;
-  email: string;
-  name: string | null;
-}
+import type { AuthUser } from "./auth-user.js";
+
+export type SessionUser = AuthUser;

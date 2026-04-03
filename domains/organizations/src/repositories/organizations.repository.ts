@@ -2,6 +2,12 @@ import type { Organization, OrganizationMember, OrganizationMemberRole } from ".
 
 export interface OrganizationsRepository {
   createOrganization: (input: { name: string }) => Promise<Organization>;
+  listOrganizationsForUser: (userId: string) => Promise<
+    {
+      organization: Organization;
+      membership: OrganizationMember;
+    }[]
+  >;
   addOrganizationMember: (input: {
     organizationId: string;
     userId: string;

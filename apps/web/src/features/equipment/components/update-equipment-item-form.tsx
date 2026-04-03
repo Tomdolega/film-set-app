@@ -26,7 +26,13 @@ export function UpdateEquipmentItemForm(props: UpdateEquipmentItemFormProps) {
 
       <label className="field">
         <span className="field__label">Name</span>
-        <input className="input" type="text" name="name" defaultValue={props.equipmentItem.name} />
+        <input
+          className="input"
+          type="text"
+          name="name"
+          defaultValue={props.equipmentItem.name}
+          required
+        />
       </label>
 
       <div className="field-grid">

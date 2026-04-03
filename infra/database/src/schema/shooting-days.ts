@@ -26,6 +26,7 @@ export const shootingDays = pgTable("shooting_days", {
   organizationId: uuid("organization_id")
     .notNull()
     .references(() => organizations.id, { onDelete: "cascade" }),
+  title: text("title").notNull(),
   date: date("date").notNull(),
   location: text("location").notNull(),
   startTime: time("start_time").notNull(),

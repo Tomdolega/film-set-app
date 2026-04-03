@@ -26,6 +26,9 @@
       "@film-set-app/domain-equipment": [
         "domains/equipment/src/index.ts"
       ],
+      "@film-set-app/domain-integrations-calendar": [
+        "domains/integrations-calendar/src/index.ts"
+      ],
       "@film-set-app/domain-notifications": [
         "domains/notifications/src/index.ts"
       ],

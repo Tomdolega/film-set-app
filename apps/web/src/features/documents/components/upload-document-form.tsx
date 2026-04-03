@@ -20,12 +20,12 @@ export function UploadDocumentForm(props: UploadDocumentFormProps) {
     <form action={formAction} className="form-card">
       <div className="form-card__header">
         <h2>Upload document</h2>
-        <p>Add a project file and create its metadata record in one step.</p>
+        <p>Upload a project file to object storage and create its metadata record in one step.</p>
       </div>
 
       <label className="field">
         <span className="field__label">File</span>
-        <input className="input" type="file" name="file" />
+        <input className="input" type="file" name="file" required />
       </label>
 
       <label className="field">

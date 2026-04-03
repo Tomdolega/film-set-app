@@ -16,11 +16,13 @@ export class DrizzleDocumentsRepository implements DocumentsRepository {
     const [document] = await this.database
       .insert(documents)
       .values({
+        id: input.id,
         organizationId: input.organizationId,
         projectId: input.projectId,
         name: input.name,
         type: input.type,
         description: input.description,
+        originalFilename: input.originalFilename,
         storageKey: input.storageKey,
         mimeType: input.mimeType,
         fileSize: input.fileSize,

@@ -15,12 +15,17 @@ export function presentDocumentRecord(
     name: document.name,
     type: document.type,
     description: document.description,
-    storageKey: document.storageKey,
+    originalFilename: document.originalFilename,
     mimeType: document.mimeType,
     fileSize: document.fileSize,
     uploadedByUserId: document.uploadedByUserId,
+    downloadPath: getDocumentDownloadPath(document.id),
     createdAt: document.createdAt.toISOString(),
     updatedAt: document.updatedAt.toISOString(),
     currentUserRole,
   };
+}
+
+function getDocumentDownloadPath(documentId: string) {
+  return `/documents/${documentId}/download`;
 }

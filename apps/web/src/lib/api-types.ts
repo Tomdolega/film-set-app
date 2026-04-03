@@ -1,3 +1,13 @@
+export interface AuthUserDto {
+  id: string;
+  email: string;
+  name: string | null;
+}
+
+export interface AuthMeDto {
+  user: AuthUserDto | null;
+}
+
 export interface OrganizationDto {
   id: string;
   name: string;
@@ -68,10 +78,11 @@ export interface DocumentDto {
     | "invoice"
     | "other";
   description: string | null;
-  storageKey: string;
+  originalFilename: string;
   mimeType: string;
   fileSize: number;
   uploadedByUserId: string;
+  downloadPath: string;
   createdAt: string;
   updatedAt: string;
   currentUserRole: "owner" | "admin" | "member";
@@ -96,6 +107,7 @@ export interface ShootingDayDto {
   id: string;
   projectId: string;
   organizationId: string;
+  title: string;
   date: string;
   location: string;
   startTime: string;
@@ -197,4 +209,27 @@ export interface NotificationsUnreadCountDto {
 
 export interface MarkAllNotificationsAsReadDto {
   updatedCount: number;
+}
+
+export interface CalendarEventDto {
+  id: string;
+  title: string;
+  description: string | null;
+  startDateTime: string;
+  endDateTime: string;
+  location: string;
+  attendees?: string[];
+  source: "google" | "internal";
+}
+
+export interface ExportedCalendarEventDto {
+  provider: "google";
+  externalEventId: string;
+  event: CalendarEventDto;
+}
+
+export interface ImportedCalendarEventDto {
+  event: CalendarEventDto;
+  shootingDay: ShootingDayDto;
+  conflicts: ScheduleConflictDto[];
 }

@@ -24,7 +24,7 @@ export function CreateEquipmentItemForm(props: CreateEquipmentItemFormProps) {
 
       <label className="field">
         <span className="field__label">Name</span>
-        <input className="input" type="text" name="name" placeholder="Sony FX6 #1" />
+        <input className="input" type="text" name="name" placeholder="Sony FX6 #1" required />
       </label>
 
       <div className="field-grid">

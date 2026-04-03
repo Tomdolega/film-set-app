@@ -8,6 +8,7 @@ import type {
 export interface CreateShootingDayRecord {
   projectId: string;
   organizationId: string;
+  title: string;
   date: string;
   location: string;
   startTime: string;
@@ -17,6 +18,7 @@ export interface CreateShootingDayRecord {
 }
 
 export interface UpdateShootingDayRecord {
+  title?: string;
   date?: string;
   location?: string;
   startTime?: string;

@@ -27,6 +27,7 @@ export const documents = pgTable("documents", {
   name: text("name").notNull(),
   type: documentTypeEnum("type").notNull().default("general"),
   description: text("description"),
+  originalFilename: text("original_filename").notNull(),
   storageKey: text("storage_key").notNull(),
   mimeType: text("mime_type").notNull(),
   fileSize: integer("file_size").notNull(),

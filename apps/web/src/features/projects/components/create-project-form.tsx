@@ -24,7 +24,7 @@ export function CreateProjectForm(props: CreateProjectFormProps) {
 
       <label className="field">
         <span className="field__label">Project name</span>
-        <input className="input" type="text" name="name" placeholder="Pilot Project" />
+        <input className="input" type="text" name="name" placeholder="Pilot Project" required />
       </label>
 
       <label className="field">
@@ -50,4 +50,3 @@ export function CreateProjectForm(props: CreateProjectFormProps) {
     </form>
   );
 }
-

@@ -19,6 +19,7 @@ export class DrizzleSchedulingRepository implements SchedulingRepository {
       .values({
         projectId: input.projectId,
         organizationId: input.organizationId,
+        title: input.title,
         date: input.date,
         location: input.location,
         startTime: input.startTime,
@@ -57,6 +58,10 @@ export class DrizzleSchedulingRepository implements SchedulingRepository {
 
     if (input.date !== undefined) {
       values.date = input.date;
+    }
+
+    if (input.title !== undefined) {
+      values.title = input.title;
     }
 
     if (input.location !== undefined) {

@@ -23,6 +23,19 @@ export class DrizzleOrganizationsRepository implements OrganizationsRepository {
     return organization;
   }
 
+  async listOrganizationsForUser(userId: string) {
+    const rows = await this.database
+      .select({
+        organization: organizations,
+        membership: organizationMembers,
+      })
+      .from(organizationMembers)
+      .innerJoin(organizations, eq(organizationMembers.organizationId, organizations.id))
+      .where(eq(organizationMembers.userId, userId));
+
+    return rows;
+  }
+
   async addOrganizationMember(input: {
     organizationId: string;
     userId: string;

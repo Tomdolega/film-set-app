@@ -1,18 +1,19 @@
-export interface WebSession {
-  id: string;
-  email: string;
-  name: string;
+import { redirect } from "next/navigation";
+
+import type { AuthMeDto, AuthUserDto } from "./api-types";
+import { apiRequest } from "./api-client";
+
+export async function getCurrentSession(): Promise<AuthUserDto | null> {
+  const response = await apiRequest<AuthMeDto>("/auth/me");
+  return response.user;
 }
 
-const DEFAULT_MOCK_USER_ID = "11111111-1111-1111-1111-111111111111";
-const DEFAULT_MOCK_USER_EMAIL = "owner@example.com";
-const DEFAULT_MOCK_USER_NAME = "Mock Owner";
+export async function requireCurrentSession(): Promise<AuthUserDto> {
+  const session = await getCurrentSession();
 
-export function getMockSession(): WebSession {
-  return {
-    id: process.env.MOCK_USER_ID ?? DEFAULT_MOCK_USER_ID,
-    email: process.env.MOCK_USER_EMAIL ?? DEFAULT_MOCK_USER_EMAIL,
-    name: process.env.MOCK_USER_NAME ?? DEFAULT_MOCK_USER_NAME,
-  };
+  if (!session) {
+    redirect("/login");
+  }
+
+  return session;
 }
-

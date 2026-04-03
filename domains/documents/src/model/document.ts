@@ -16,6 +16,7 @@ export interface Document {
   name: string;
   type: DocumentType;
   description: string | null;
+  originalFilename: string;
   storageKey: string;
   mimeType: string;
   fileSize: number;

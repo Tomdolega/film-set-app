@@ -8,6 +8,7 @@ export interface ShootingDay {
   id: string;
   projectId: string;
   organizationId: string;
+  title: string;
   date: string;
   location: string;
   startTime: string;

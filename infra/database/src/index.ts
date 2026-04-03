@@ -14,4 +14,5 @@ export { DrizzleNotificationsRepository } from "./repositories/notifications.rep
 export { DrizzleOrganizationsRepository } from "./repositories/organizations.repository.js";
 export { DrizzleProjectsRepository } from "./repositories/projects.repository.js";
 export { DrizzleSchedulingRepository } from "./repositories/scheduling.repository.js";
+export { DrizzleSessionsRepository } from "./repositories/sessions.repository.js";
 export { DrizzleUsersRepository } from "./repositories/users.repository.js";

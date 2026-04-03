@@ -88,8 +88,15 @@ export async function deleteDocumentAction(
   organizationId: string,
   projectId: string,
   documentId: string,
-): Promise<void> {
-  await deleteDocument(documentId);
+): Promise<FormState> {
+  try {
+    await deleteDocument(documentId);
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Unable to delete the document.",
+    };
+  }
+
   redirect(getProjectPath(organizationId, projectId));
 }
 

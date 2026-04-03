@@ -115,7 +115,7 @@ export async function assignShootingDayResource(
       type: "crew_assignment",
       severity: "info",
       title: "Assigned to shooting day",
-      message: `You were assigned to the shooting day on ${shootingDay.date} at ${shootingDay.location}.`,
+      message: `You were assigned to "${shootingDay.title}" on ${shootingDay.date} at ${shootingDay.location}.`,
       linkPath: getShootingDayLinkPath(
         shootingDay.organizationId,
         shootingDay.projectId,

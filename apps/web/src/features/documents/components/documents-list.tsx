@@ -14,7 +14,7 @@ export function DocumentsList(props: DocumentsListProps) {
     return (
       <EmptyState
         title="No documents yet"
-        description="Upload the first project document to validate the document flow."
+        description="Upload the first project document to validate the storage-backed document flow."
       />
     );
   }
@@ -22,20 +22,32 @@ export function DocumentsList(props: DocumentsListProps) {
   return (
     <div className="stack">
       {props.documents.map((document) => (
-        <Link
-          key={document.id}
-          href={`/organizations/${props.organizationId}/projects/${props.projectId}/documents/${document.id}`}
-          className="list-card"
-        >
+        <div key={document.id} className="list-card">
           <div>
-            <strong>{document.name}</strong>
+            <Link
+              href={`/organizations/${props.organizationId}/projects/${props.projectId}/documents/${document.id}`}
+              className="text-link"
+            >
+              {document.name}
+            </Link>
             <p>
-              {document.type} | {document.mimeType} | {formatFileSize(document.fileSize)}
+              {document.type} | {document.originalFilename} | {document.mimeType} |{" "}
+              {formatFileSize(document.fileSize)}
             </p>
           </div>
 
-          <span className="pill">{document.type.replaceAll("_", " ")}</span>
-        </Link>
+          <div className="stack stack--tight documents-list__actions">
+            <a
+              href={document.downloadPath}
+              className="text-link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open file
+            </a>
+            <span className="pill">{document.type.replaceAll("_", " ")}</span>
+          </div>
+        </div>
       ))}
     </div>
   );

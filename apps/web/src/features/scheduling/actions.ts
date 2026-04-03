@@ -24,19 +24,21 @@ export async function createShootingDayAction(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
+  const title = readRequiredString(formData, "title");
   const date = readRequiredString(formData, "date");
   const location = readRequiredString(formData, "location");
   const startTime = readRequiredString(formData, "startTime");
   const endTime = readRequiredString(formData, "endTime");
 
-  if (!date || !location || !startTime || !endTime) {
+  if (!title || !date || !location || !startTime || !endTime) {
     return {
-      error: "Date, location, start time, and end time are required.",
+      error: "Title, date, location, start time, and end time are required.",
     };
   }
 
   try {
     const shootingDay = await createShootingDay(projectId, {
+      title,
       date,
       location,
       startTime,
@@ -64,19 +66,21 @@ export async function updateShootingDayAction(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
+  const title = readRequiredString(formData, "title");
   const date = readRequiredString(formData, "date");
   const location = readRequiredString(formData, "location");
   const startTime = readRequiredString(formData, "startTime");
   const endTime = readRequiredString(formData, "endTime");
 
-  if (!date || !location || !startTime || !endTime) {
+  if (!title || !date || !location || !startTime || !endTime) {
     return {
-      error: "Date, location, start time, and end time are required.",
+      error: "Title, date, location, start time, and end time are required.",
     };
   }
 
   try {
     await updateShootingDay(shootingDayId, {
+      title,
       date,
       location,
       startTime,
@@ -101,8 +105,15 @@ export async function deleteShootingDayAction(
   organizationId: string,
   projectId: string,
   shootingDayId: string,
-): Promise<void> {
-  await deleteShootingDay(shootingDayId);
+): Promise<FormState> {
+  try {
+    await deleteShootingDay(shootingDayId);
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Unable to delete the shooting day.",
+    };
+  }
+
   redirect(getProjectSchedulePath(organizationId, projectId));
 }
 
@@ -181,8 +192,15 @@ export async function removeShootingDayAssignmentAction(
   projectId: string,
   shootingDayId: string,
   assignmentId: string,
-): Promise<void> {
-  await removeShootingDayAssignment(shootingDayId, assignmentId);
+): Promise<FormState> {
+  try {
+    await removeShootingDayAssignment(shootingDayId, assignmentId);
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Unable to remove the assignment.",
+    };
+  }
+
   redirect(getShootingDayPath(organizationId, projectId, shootingDayId));
 }
 

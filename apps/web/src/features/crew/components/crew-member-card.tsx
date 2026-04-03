@@ -28,6 +28,7 @@ export function CrewMemberCard(props: CrewMemberCardProps) {
     props.member.id,
   );
   const [state, formAction] = useActionState(updateAction, initialFormState);
+  const [removeState, removeFormAction] = useActionState(removeAction, initialFormState);
 
   return (
     <div className="panel crew-card">
@@ -70,10 +71,13 @@ export function CrewMemberCard(props: CrewMemberCardProps) {
       </form>
 
       {props.member.accessRole === "owner" ? null : (
-        <form action={removeAction} className="crew-card__remove">
-          <button type="submit" className="button button--secondary">
-            Remove
-          </button>
+        <form action={removeFormAction} className="crew-card__remove">
+          {removeState.error ? <p className="field-error">{removeState.error}</p> : null}
+          <SubmitButton
+            label="Remove"
+            pendingLabel="Removing..."
+            variant="secondary"
+          />
         </form>
       )}
     </div>

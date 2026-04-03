@@ -2,6 +2,7 @@ import { apiRequest } from "@/lib/api-client";
 import type { ShootingDayDto } from "@/lib/api-types";
 
 interface CreateShootingDayPayload {
+  title: string;
   date: string;
   location: string;
   startTime: string;

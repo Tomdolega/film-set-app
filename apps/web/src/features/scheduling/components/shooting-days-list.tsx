@@ -28,9 +28,9 @@ export function ShootingDaysList(props: ShootingDaysListProps) {
           className="list-card"
         >
           <div>
-            <strong>{shootingDay.date}</strong>
+            <strong>{shootingDay.title}</strong>
             <p>
-              {shootingDay.location} | {shootingDay.startTime} - {shootingDay.endTime}
+              {shootingDay.date} | {shootingDay.location} | {shootingDay.startTime} - {shootingDay.endTime}
             </p>
           </div>
 

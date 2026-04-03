@@ -43,6 +43,27 @@
       "when": 1775161577023,
       "tag": "0005_fair_raza",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1775163768890,
+      "tag": "0006_whole_paper_doll",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1775195489268,
+      "tag": "0007_thick_timeslip",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1775196471664,
+      "tag": "0008_panoramic_senator_kelly",
+      "breakpoints": true
     }
   ]
 }

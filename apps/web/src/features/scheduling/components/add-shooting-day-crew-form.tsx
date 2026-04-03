@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 
+import { EmptyState } from "@/components/empty-state";
 import { SubmitButton } from "@/components/submit-button";
 import type { CrewMemberDto } from "@/lib/api-types";
 import { initialFormState } from "@/lib/form-state";
@@ -24,6 +25,18 @@ export function AddShootingDayCrewForm(props: AddShootingDayCrewFormProps) {
   );
   const [state, formAction] = useActionState(action, initialFormState);
 
+  if (props.availableCrew.length === 0) {
+    return (
+      <section className="panel">
+        <p className="eyebrow">Assign crew</p>
+        <EmptyState
+          title="No unassigned crew available"
+          description="Add project crew on the project page or remove an existing assignment before adding more crew here."
+        />
+      </section>
+    );
+  }
+
   return (
     <form action={formAction} className="form-card">
       <div className="form-card__header">
@@ -33,7 +46,7 @@ export function AddShootingDayCrewForm(props: AddShootingDayCrewFormProps) {
 
       <label className="field">
         <span className="field__label">Crew member</span>
-        <select className="input" name="referenceId" defaultValue="">
+        <select className="input" name="referenceId" defaultValue="" required>
           <option value="" disabled>
             Select project crew
           </option>

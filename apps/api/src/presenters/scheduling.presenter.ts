@@ -11,6 +11,7 @@ export function presentShootingDay(result: ShootingDayWithMembership) {
     id: result.shootingDay.id,
     projectId: result.shootingDay.projectId,
     organizationId: result.shootingDay.organizationId,
+    title: result.shootingDay.title,
     date: result.shootingDay.date,
     location: result.shootingDay.location,
     startTime: result.shootingDay.startTime,

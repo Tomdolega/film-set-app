@@ -1,11 +1,13 @@
 import type { Document, DocumentType } from "../model/document.js";
 
 export interface CreateDocumentRecord {
+  id: string;
   organizationId: string;
   projectId: string;
   name: string;
   type: DocumentType;
   description: string | null;
+  originalFilename: string;
   storageKey: string;
   mimeType: string;
   fileSize: number;

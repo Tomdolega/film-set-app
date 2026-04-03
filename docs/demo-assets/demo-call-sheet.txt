@@ -1,0 +1,13 @@
+FILM SET APP DEMO CALL SHEET
+
+Project: Closed Alpha Demo Project
+Shoot Day: Day 1 | Main Unit
+Date: 2026-05-04
+Location: Studio A
+
+Crew Notes:
+- Marta Producer: approvals
+- Kuba DoP: camera
+- Blue Sky Lighting: vendor support
+
+Use this file for the document upload/download smoke test.

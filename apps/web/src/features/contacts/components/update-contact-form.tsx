@@ -26,7 +26,7 @@ export function UpdateContactForm(props: UpdateContactFormProps) {
 
       <label className="field">
         <span className="field__label">Name</span>
-        <input className="input" type="text" name="name" defaultValue={props.contact.name} />
+        <input className="input" type="text" name="name" defaultValue={props.contact.name} required />
       </label>
 
       <label className="field">

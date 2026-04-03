@@ -79,8 +79,15 @@ export async function updateEquipmentItemAction(
 export async function archiveEquipmentItemAction(
   organizationId: string,
   equipmentId: string,
-): Promise<void> {
-  await archiveEquipmentItem(equipmentId);
+): Promise<FormState> {
+  try {
+    await archiveEquipmentItem(equipmentId);
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Unable to archive the equipment item.",
+    };
+  }
+
   redirect(`/organizations/${organizationId}/equipment`);
 }
 

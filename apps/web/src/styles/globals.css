@@ -102,6 +102,14 @@ select {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.sidebar__logout {
+  margin-top: 0.75rem;
+}
+
+.sidebar__logout-button {
+  width: 100%;
+}
+
 .content {
   display: flex;
   flex-direction: column;
@@ -119,6 +127,14 @@ select {
 
 .page {
   padding: 1.5rem 2rem 2rem;
+}
+
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
 }
 
 .stack {
@@ -144,6 +160,10 @@ select {
   border: 1px solid #d7dfeb;
   background: #ffffff;
   padding: 1.25rem;
+}
+
+.auth-card {
+  width: min(100%, 28rem);
 }
 
 .panel__header,
@@ -197,6 +217,10 @@ select {
 
 .textarea {
   resize: vertical;
+}
+
+.textarea--code {
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
 }
 
 .button {
@@ -265,6 +289,7 @@ select {
 }
 
 .notice--error,
+.notice--success,
 .field-error {
   color: #9a1f1f;
 }
@@ -272,6 +297,12 @@ select {
 .notice--error {
   border-color: #f0c7c7;
   background: #fff2f2;
+}
+
+.notice--success {
+  color: #11552f;
+  border-color: #b9e3c7;
+  background: #eefbf2;
 }
 
 .field-error {
@@ -305,6 +336,10 @@ select {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.documents-list__actions {
+  align-items: flex-end;
 }
 
 .notification-card {

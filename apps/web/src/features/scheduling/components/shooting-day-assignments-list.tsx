@@ -1,7 +1,7 @@
 import { EmptyState } from "@/components/empty-state";
 import type { ShootingDayAssignmentDto } from "@/lib/api-types";
 
-import { removeShootingDayAssignmentAction } from "../actions";
+import { RemoveShootingDayAssignmentForm } from "./remove-shooting-day-assignment-form";
 
 interface ShootingDayAssignmentsListProps {
   organizationId: string;
@@ -23,14 +23,6 @@ export function ShootingDayAssignmentsList(props: ShootingDayAssignmentsListProp
   return (
     <div className="stack">
       {props.assignments.map((assignment) => {
-        const action = removeShootingDayAssignmentAction.bind(
-          null,
-          props.organizationId,
-          props.projectId,
-          props.shootingDayId,
-          assignment.id,
-        );
-
         return (
           <div key={assignment.id} className="panel crew-card">
             <div>
@@ -45,11 +37,12 @@ export function ShootingDayAssignmentsList(props: ShootingDayAssignmentsListProp
             </div>
 
             <div className="crew-card__remove">
-              <form action={action}>
-                <button type="submit" className="button button--secondary">
-                  Remove
-                </button>
-              </form>
+              <RemoveShootingDayAssignmentForm
+                organizationId={props.organizationId}
+                projectId={props.projectId}
+                shootingDayId={props.shootingDayId}
+                assignmentId={assignment.id}
+              />
             </div>
           </div>
         );

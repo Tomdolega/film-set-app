@@ -2,10 +2,12 @@ import { Router } from "express";
 
 import type { CrewRepository } from "@film-set-app/domain-crew";
 import type { EquipmentLookupRepository } from "@film-set-app/domain-equipment";
+import type { CalendarProvider } from "@film-set-app/domain-integrations-calendar";
 import type { NotificationsRepository } from "@film-set-app/domain-notifications";
 import type { SchedulingRepository } from "@film-set-app/domain-scheduling";
 import type { ProjectsRepository } from "@film-set-app/domain-projects";
 
+import { createExportShootingDayToCalendarController } from "../controllers/calendar/export-shooting-day-to-calendar.controller.js";
 import { createAssignShootingDayResourceController } from "../controllers/scheduling/assign-shooting-day-resource.controller.js";
 import { createDeleteShootingDayController } from "../controllers/scheduling/delete-shooting-day.controller.js";
 import { createGetShootingDayCallSheetController } from "../controllers/scheduling/get-shooting-day-call-sheet.controller.js";
@@ -16,6 +18,7 @@ import { createRemoveShootingDayAssignmentController } from "../controllers/sche
 import { createUpdateShootingDayController } from "../controllers/scheduling/update-shooting-day.controller.js";
 
 interface CreateShootingDaysRouterParams {
+  calendarProviders: CalendarProvider[];
   crewRepository: CrewRepository;
   equipmentRepository: EquipmentLookupRepository;
   notificationsRepository: NotificationsRepository;
@@ -29,6 +32,10 @@ export function createShootingDaysRouter(params: CreateShootingDaysRouterParams)
   router.get("/:shootingDayId", createGetShootingDayController(params));
   router.patch("/:shootingDayId", createUpdateShootingDayController(params));
   router.delete("/:shootingDayId", createDeleteShootingDayController(params));
+  router.post(
+    "/:shootingDayId/export-calendar",
+    createExportShootingDayToCalendarController(params),
+  );
   router.post(
     "/:shootingDayId/assignments",
     createAssignShootingDayResourceController(params),
